@@ -1,0 +1,19 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+
+  <p align ="center">Ini adalah halaman home Aplikasi Prediksi Kelulusan Mahasiswa</p>
+        
+    <img src="{{ url_for('static', filename='bootstrap/assets/img/logo_pred.jpeg') }}" height="400px"
+    align="right" border="7"/>
+
+    <p>
+    Petunjuk Penggunaan Aplikasi Prediksi Kelulusan Mahasiswa </br>
+    1. Home      : Berisi informasi petunjuk penggunaan aplikasi.</br>
+    2. Kelulusan : Berisi informasi database hasil inputan prediksi dari halaman user.</br>
+    3. Rekap     : Berisi informasi rekap hasil kelulusan berbentuk diagram pie</br>
+    4. Logout    : Tombol keluar dari halaman admin
+    
+  </p>
+  
+
+{% endblock %}

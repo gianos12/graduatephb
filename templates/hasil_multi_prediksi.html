@@ -1,0 +1,93 @@
+{% block title %}Hasil Prediksi{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-borderless">
+            <div class="card-body">
+                <script src="/static/js/table2excel.js"></script>
+                <body>
+                    <button  class="btn btn-success" id="downloadexcel">Download File</button>
+                    <br><br>
+                <div class="table-responsive">
+                    <table id="example-table" class="table table-vcenter table-bordered">
+                        <thead class="text-center">
+                            <tr>
+                                <th rowspan="2">No</th>
+                                <th rowspan="2">NIM</th>
+                                <th rowspan="2">Nama Lengkap</th>
+                                <th rowspan="2">Umur</th>
+                                <th rowspan="2">Gender</th>
+                                <th rowspan="2">Domisili</th>
+                                <th rowspan="2">Status Sekolah</th>
+                                <th rowspan="2">Asal Sekolah</th>
+                                <th rowspan="2">Kegiatan Organisasi</th>
+                                <th rowspan="2">P. Orang Tua</th>
+                                <th colspan="6">IPS</th>
+                                <th rowspan="2">Kelulusan</th>
+                            </tr>
+                            <tr>
+                                <th>1</th>
+                                <th>2</th>
+                                <th>3</th>
+                                <th>4</th>
+                                <th>5</th>
+                                <th>6</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dt in data %}
+                            <tr>
+                                <td class="text-center">{{dt[0]}}</td>
+                                <td class="text-center">{{dt[1]}}</td>
+                                <td>{{dt[2]}}</td>
+                                <td class="text-center">{{dt[3]}}</td>
+                                <td class="text-center">{{ 'Laki-laki' if dt[4]=='0' else 'Perempuan'}}</td>
+                                {% if dt[5]=='1' %}<td class="text-center">Tegal</td>{% endif %}
+                                {% if dt[5]=='2' %}<td class="text-center">Brebes</td>{% endif %}
+                                {% if dt[5]=='3' %}<td class="text-center">Pemalang</td>{% endif %}
+                                {% if dt[5]=='-999' %}<td class="text-center">Lainnya</td>{% endif %}
+                                <td class="text-center">{{ 'Negeri' if dt[6]=='0' else 'Swasta'}}</td>
+                                <td class="text-center">{{ 'SMA' if dt[7]=='0' else 'SMK'}}</td>
+                                <td class="text-center">{{ 'Tidak' if dt[8]=='0' else 'Ya'}}</td>
+                                {% if dt[9]=='0' %}<td class="text-center">Rendah</td>{% endif %}
+                                {% if dt[9]=='1' %}<td class="text-center">Sedang</td>{% endif %}
+                                {% if dt[9]=='2' %}<td class="text-center">Tinggi</td>{% endif %}
+                                <td class="text-center">{{dt[10]}}</td>
+                                <td class="text-center">{{dt[11]}}</td>
+                                <td class="text-center">{{dt[12]}}</td>
+                                <td class="text-center">{{dt[13]}}</td>
+                                <td class="text-center">{{dt[14]}}</td>
+                                <td class="text-center">{{dt[15]}}</td>
+                                <td class="text-center">
+                                    {% if dt[16] == "1" %}
+                                    <button class="btn bg-success">Tepat Waktu</button>
+                                    {% endif %}
+
+                                    {% if dt[16] == "0" %}
+                                    <button class="btn bg-danger">Tidak Tepat Waktu</button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <script>
+                        document.getElementById('downloadexcel').addEventListener('click',function() {
+                            var table2excel = new Table2Excel();
+                            table2excel.export(document.querySelectorAll("#example-table"));
+                        });
+                    </script>
+                </body>
+                </div>
+                <br>
+                <center>
+                    <a href="/admin/prediksi" class="btn btn-warning">Kembali</a>
+                </center>
+            </div>
+
+        </div>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

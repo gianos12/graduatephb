@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Weighted KNN||Prediction</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='bootstrap/assets/img/favicon.png') }}">
+  
+  <link href="{{ url_for('static', filename='bootstrap/assets/img/apple-touch-icon.png') }}">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{{ url_for('static', filename='bootstrap/assets/css/style.css') }}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Bootslander - v4.7.2
+  * Template URL: https://bootstrapmade.com/bootslander-free-bootstrap-landing-page-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center header-transparent">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1><a href="index.html"><span>Graduated Prediction</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('prediksi') }}">Prediksi</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+        <!-- ======= Prediction Section ======= -->
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+              <div class="card">
+          <div class="card-header text-center">
+            Prediksi Kelulusan Mahasiswa PHB
+          </div>
+                  <div class="container">
+            <!-- prediction form section -->
+                      <div class="card-body">
+              <div class="form-container ">
+                <form class="form-group align-items-center" action = "/predict/" method="post" enctype="multipart/form-data">
+        
+                    <div class="form-group row">
+                      <label class="control-label col-sm-2" for="nama">Nama </label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" id="nama" name="nama" onkeypress='return harusHuruf(event)'>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="form-group row">
+                      <label class="control-label col-sm-2" for="umur">Umur </label>
+                      <div class="col-sm-4">
+                        <input type="number" class="form-control" id="umur" name="umur"/>
+                      </div>
+                    </div>
+                    <br>
+                    <script>
+                      function harusHuruf(evt){
+                        var charCode = (evt.which) ? evt.which : event.keyCode
+                        if ((charCode <65 || charCode > 90)&&(charCode < 97 || charCode > 122)&&charCode>32)
+                          return false;
+                          return true;
+                      }
+                    </script>
+        
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2">Jenis Kelamin</label>
+                    <div class="col-sm-4">
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin1" value="0" checked>
+                        <label class="form-check-label" for="jenis_kelamin1">
+                        Laki-laki
+                         </label>
+                          </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin2" value="1">
+                          <label class="form-check-label" for="jenis_kelamin2">
+                            Perempuan
+                          </label>
+                            </div>
+                    </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="control-label col-sm-2">Status Sekolah</label>
+                  <div class="col-sm-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status_sekolah" id="status_sekolah1" value="0" checked>
+                      <label class="form-check-label" for="status_sekolah1">
+                      Negeri
+                       </label>
+                        </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status_sekolah" id="status_sekolah2" value="1">
+                        <label class="form-check-label" for="status_sekolah2">
+                        Swasta
+                        </label>
+                          </div>
+                  </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="control-label col-sm-2">Asal Sekolah</label>
+                <div class="col-sm-4">
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" name="asal_sekolah" id="asal_sekolah1" value="0" checked>
+                    <label class="form-check-label" for="status_sekolah1">
+                    SMK
+                     </label>
+                      </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="asal_sekolah" id="asal_sekolah2" value="1">
+                      <label class="form-check-label" for="asal_sekolah2">
+                        SMA
+                      </label>
+                        </div>
+                </div>
+                </div>
+                  <div class="form-group row">
+                    <label class="control-label col-sm-2">Kegiatan UKM </label>
+                <div class="col-sm-4">
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" name="kegiatan_ukm" id="kegiatan_ukm1" value="0" checked>
+                    <label class="form-check-label" for="kegiatan_ukm1">
+                     Ya
+                     </label>
+                      </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="kegiatan_ukm" id="kegiatan_ukm2" value="1">
+                      <label class="form-check-label" for="kegiatan_ukm2">
+                    Tidak
+                      </label>
+                        </div>
+                </div>
+                </div>
+                
+                    <div class="form-group row">
+                      <label class="control-label col-sm-2">Penghasilan Orang Tua </label>
+                         <div class="col-sm-4">
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="penghasilan_ortu" id="tinggi" value="2" checked>
+                        <label class="form-check-label" for="tinggi">
+                        Tinggi
+                         </label>
+                          </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="penghasilan_ortu" id="sedang" value="1">
+                          <label class="form-check-label" for="sedang">
+                            Sedang
+                          </label>
+                            </div>
+                             <div class="form-check">
+                          <input class="form-check-input" type="radio" name="penghasilan_ortu" id="rendah" value="0">
+                          <label class="form-check-label" for="rendah">
+                            Rendah
+                          </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                        <div class="form-group row">
+                          <label class="control-label col-sm-2" for="ips1">IPS 1 </label>
+                          <div class="col-sm-4">
+                            <input type="number" step="0.01" max="4.00" min="0.01" lang="en" class="form-control" id="ips1" name="ips1" placeholder="0.00"/>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="form-group row">
+                          <label class="control-label col-sm-2" for="ips2">IPS 2 </label>
+                          <div class="col-sm-4">
+                            <input type="number" step="0.01" max="4" min="0"  lang="en" class="form-control" id="ips2" name="ips2" placeholder="0.00">
+                          </div>
+                        </div>
+                        <br>
+            
+                        <div class="form-group row">
+                          <label class="control-label col-sm-2" for="ips3">IPS 3 </label>
+                          <div class="col-sm-4">
+                            <input type="number" step="0.01" max="4" min="0"  lang="en" class="form-control" id="ips3" name="ips3" placeholder="0.00">
+                          </div>
+                        </div>
+                        <br>
+            
+                        <div class="form-group row">
+                          <label class="control-label col-sm-2" for="ips4">IPS 4 </label>
+                          <div class="col-sm-4">
+                            <input type="number" step="0.01" max="4" min="0"  lang="en" class="form-control" id="ips4" name="ips4" placeholder="0.00">
+                          </div>
+                        </div>
+                        <br>
+            
+                        <div class="form-group row">
+                          <label class="control-label col-sm-2" for="ips5">IPS 5 </label>
+                          <div class="col-sm-4">
+                            <input type="number" step="0.01" max="4" min="0"  lang="en" class="form-control" id="ips5" name="ips5" placeholder="0.00">
+                          </div>
+                        </div>
+                        <br>
+            
+                        <div class="form-group row">
+                          <label class="control-label col-sm-2" for="ips6">IPS 6 </label>
+                          <div class="col-sm-4">
+                            <input type="number" step="0.01" max="4" min="0"  lang="en" class="form-control" id="ips6" name="ips6" placeholder="0.00">
+                          </div>
+                        </div>
+        
+                    <br>
+                    <div class="form-group row">
+                    <label class="control-label col-sm-2" >&nbsp;</label>
+                      <div class="col-sm-offset-2 col-sm-4">
+                        <button type="submit" class="btn btn-primary">Prediksi</button>
+                      </div>
+                    </div>
+                  </form>
+              </div>
+        </section><!-- End prediksi Section -->
+
+  </main>
+<br>
+   <!-- ======= Footer ======= -->
+   <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-info">
+              <h3>Weighted KNN Prediction</h3>
+              <p class="pb-3"><em>Aplikasi ini dibuat untuk memenuhi syarat Tugas Akhir 2022</em></p>
+              <p>
+                Amaliyah Gian Fadilah <br>
+                Margadana, Tegal City<br><br>
+                <strong>Phone:</strong> +62895 36059 0709<br>
+                <strong>Email:</strong> info@weightedknn.com<br>
+              </p>
+              <div class="social-links mt-3">
+                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+          
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>2022</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        Designed by bootstrap||gians.id
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/php-email-form/validate.js') }}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{ url_for('static', filename='bootstrap/assets/js/main.js') }}"></script>
+
+</body>
+
+</html>

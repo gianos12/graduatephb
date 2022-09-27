@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Weight KNN|Prediction</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='bootstrap/assets/img/favicon.png') }}">
+  
+  <link href="{{ url_for('static', filename='bootstrap/assets/img/apple-touch-icon.png') }}">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{{ url_for('static', filename='bootstrap/assets/css/style.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center header-transparent">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        
+        <h1><a href="index.html"><span>Graduated Prediction Using Weighted KNN</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('prediksi') }}">Manual predict</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('mahasiswa') }}">Multi predict</a></li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-7 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center">
+          <div data-aos="zoom-out">
+            <font color="yellow"><h1>See if you pass or not?</font>
+              <span><font color="yellow">Predict now!</span></h1> </font>
+            <h2>Prediksi kelulusan mahasiswa Prodi Teknik Informatika PHB</h2>
+            <div class="text-center text-lg-start">
+              <a href="{{ url_for('prediksi') }}" class="btn-get-started scrollto">Get Started</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="300">
+          <img src="{{ url_for('static', filename='bootstrap/assets/img/WKNN.png') }}" class="img-fluid animated" alt="">
+        </div>
+      </div>
+    </div>
+
+    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+      <defs>
+        <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+      </defs>
+      <g class="wave1">
+        <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+      </g>
+      <g class="wave2">
+        <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+      </g>
+      <g class="wave3">
+        <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+      </g>
+    </svg>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= Fitur tersedia Section ======= -->
+    <section id="fitur" class="fitur">
+      <div class="container-fluid">
+
+        <div class="row">
+          <div class="col-lg-4 order-1 order-lg-2 hero-img" data-aos="fade-right">
+            <img src="{{ url_for('static', filename='bootstrap/assets/img/logo_pred.jpeg') }}" class="img-fluid animated" alt="">
+          </div>
+
+          <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5" data-aos="fade-left">
+            <h3>Apa saja fitur yang tersedia?</h3>
+            <p>Website ini digunakan untuk memprediksi kelulusan mahasiswa Program Studi Teknik Informatika PHB menggunakan algoritma Weighted KNN. Weighted KNN merupakan algoritma perkembangan K-Nearest Neighbor dengan memberi bobot terberat pada tetangga terdekatnya dalam data latih.</p>
+            
+            <div class="icon-box" data-aos="zoom-in" data-aos-delay="200">
+              <div class="icon"><i class="bx bx-gift"></i></div>
+              <h4 class="title"><a href="">Prediction</a></h4>
+              <p class="description">Pada fitur ini digunakan untuk memprediksi kelulusan mahasiswa. </p>
+            </div>
+
+            <div class="icon-box" data-aos="zoom-in" data-aos-delay="300">
+              <div class="icon"><i class="bx bx-atom"></i></div>
+              <h4 class="title"><a href="">Contact</a></h4>
+              <p class="description">Pada fitur ini user dapat menghubungi pada kontak yang tertera dan dapat mengirim pesan.</p>
+            </div>
+
+            <div class="icon-box" data-aos="zoom-in" data-aos-delay="100">
+              <div class="icon"><i class="bx bx-fingerprint"></i></div>
+              <h4 class="title"><a href="">About</a></h4>
+              <p class="description">Pada fitur ini berisi informasi pembuat aplikasi</p>
+            </div>
+
+            <div class="icon-box" data-aos="zoom-in" data-aos-delay="300">
+              <div class="icon"><i class="bx bx-atom"></i></div>
+              <h4 class="title"><a href="">Admin</a></h4>
+              <p class="description">Pada fitur ini hanya admin yang dapat menggunakan.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section><!-- End fitur tersedia Section -->
+
+
+    <!-- ======= Gallery Section ======= -->
+    <section id="gallery" class="gallery">
+      <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+          <h2>Gallery</h2>
+          <p>Check our Gallery</p>
+        </div>
+
+        <div class="row g-0" data-aos="fade-left">
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+              <a href="{{ url_for('static', filename='img/lulus1.jpeg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename='img/lulus1.jpeg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="150">
+              <a href="{{ url_for('static', filename='img/lulus2.jpeg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename='img/lulus2.jpeg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
+              <a href="{{ url_for('static', filename='img/lulus3.jpeg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename='img/lulustiga.jpeg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="250">
+              <a href="{{ url_for('static', filename='img/lulus4.jpeg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename='img/lulus4.jpeg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
+              <a href="{{ url_for('static', filename='img/lulus5.jpeg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename='img/lulus5.jpeg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="350">
+              <a href="{{ url_for('static', filename='img/lulus6.jpeg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename='img/lulus6.jpeg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="400">
+              <a href="{{ url_for('static', filename='img/lulus7.jpeg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename='img/lulus7.jpeg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="450">
+              <a href="{{ url_for('static', filename='img/lulus8.jpeg') }}" class="gallery-lightbox">
+                <img src="{{ url_for('static', filename='img/lulus8.jpeg') }}" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Gallery Section -->
+
+    <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials">
+      <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+          <h2>Testimonials</h2>
+        </div>
+
+        <div class="row g-0" data-aos="fade-left">
+        <div class="testimonials-slider swiper" data-aos="zoom-in" data-aos-delay="100">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="{{ url_for('static', filename='bootstrap/assets/img/testimonials/bagus.jpeg') }}" class="testimonial-img" alt="">
+                <h3>Bagus Wijayanto</h3>
+                <h4>Mahasiswa</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Aplikasi ini bisa mengetahui sebelum wisuda, diluar kemampuan manusiaa waowww!!
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="{{ url_for('static', filename='bootstrap/assets/img/testimonials/ainun.jpeg') }}" class="testimonial-img" alt="">
+                <h3>Ainun Fitriyana</h3>
+                <h4>Mahasiswa</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Aplikasi ini sangat membantu sekali
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="{{ url_for('static', filename='bootstrap/assets/img/testimonials/ilham.jpeg') }}" class="testimonial-img" alt="">
+                <h3>Ilham Akhsani</h3>
+                <h4>Mahasiswa 2</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Aplikasi ini sangat bermanfaat banget, Recomended!
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="{{ url_for('static', filename='bootstrap/assets/img/testimonials/qirani.jpeg') }}" class="testimonial-img" alt="">
+                <h3>Qirani Rifa Annisa</h3>
+                <h4>Mahasiswa</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Sangat membantu kami para mahasiswa, biar kami bisa memprediksi lulus tidaknya!
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="{{ url_for('static', filename='bootstrap/assets/img/testimonials/tulus.jpeg') }}" class="testimonial-img" alt="">
+                <h3>Dwiki Tulus Rahmawan</h3>
+                <h4>Mahasiswa</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                 Kueren, perlu dikembangkan lagi agar lebih kompleks!
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section><!-- End Testimonials Section -->
+
+    <!-- ======= about Section ======= -->
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+          <h2>About</h2>
+          <p>About me</p>
+       
+        <style>
+          body {
+            background-color: #e8e8e8;
+          }
+          .kartu {
+            width: 800px;
+            margin: 0 auto;
+            margin-top: 70px;
+                box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,.03);
+        transition: all .3s;
+          } 
+          .foto {
+            padding: 20px;
+          }
+          tbody {
+        font-size: 20px;
+        font-weight: 300;
+      }
+      .biodata {
+        margin-top: 30px;
+      }
+        </style>
+      </head>
+      <body>
+            
+      <div class="container">
+      <div class="card kartu">
+        <div class="row">
+          <div class="col-md-4">
+          <div class="foto">
+              <img src="{{url_for ('static', filename ='img/gian.png') }}" alt="" width="200" height="auto">
+          </div>
+          </div>
+          <div class="col-md-8 kertas-biodata">
+            <div class="biodata">
+            <table width="100%" border="0">
+        <tbody><tr>
+            <td valign="top">
+            <table border="0" width="100%" style="padding-left: 2px; padding-right: 13px;">
+              <tbody>
+                <tr>
+                  <td width="25%" valign="top" class="textt">Nama</td>
+                    <td width="2%">:</td>
+                    <td style="color: rgb(118, 157, 29); font-weight:bold">Amaliyah Gian Fadilah</td>
+                </tr>
+              <tr>
+                  <td class="textt">Jenis Kelamin</td>
+                    <td>:</td>
+                    <td>Perempuan</td>
+                </tr>
+              <tr>
+                  <td class="textt">Tempat Lahir</td>
+                    <td>:</td>
+                    <td>Tegal</td>
+                </tr>
+              <tr>
+                  <td class="textt">Tanggal Lahir</td>
+                    <td>:</td>
+                    <td>12 Desember 1999</td>
+                </tr>
+              <tr>
+                  <td valign="top" class="textt">Prodi</td>
+                    <td valign="top">:</td>
+                    <td>Teknik Informatika</td>
+                </tr>
+                <tr>
+                  <td valign="top" class="textt">Kontak</td>
+                    <td valign="top">:</td>
+                    <td>+6289 5360 590709</td>
+                </tr>
+            </tbody></table>
+            </td>
+        </tr>
+        </tbody></table>
+      </div>
+          </div>
+        </div>
+      </div>
+      </div>
+        <script src="js/bootstrap.min.js"></script>
+      </body>
+      </html>
+    </section><!-- End about Section -->
+
+    
+
+    <!-- ======= F.A.Q Section ======= -->
+    <section id="faq" class="faq section-bg">
+      <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+          <h2>F.A.Q</h2>
+          <p>Frequently Asked Questions</p>
+        </div>
+
+        <div class="faq-list">
+          <ul>
+            <li data-aos="fade-up" data-aos-delay="300">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">Apa itu algoritma Weighted K-Nearest Neighbor? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  Metode weighted K-Nearest Neighbor merupakan algoritma perkembangan pada KNN, algoritma WKNN memakai prinsip yang sama dengan kNN yaitu mencari jarak terdekat antara data yang akan diuji dengan sejumlah k tetangga terdekatnya dalam data latih. WkNN memberi bobot terberat pada tetangga terdekat dan terkecil pada tetangga terjauh sesuai fungsi jarak.
+                </p>
+              </div>
+            </li>
+            
+            <li data-aos="fade-up">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1"> Mengapa pilih metode Weighted K-Nearest Neighbor? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
+                <p>
+                   Karena memberi bobot lebih pada titik-titik yang terdekat dan memberi bobot lebih kecil pada titik-titik yang lebih jauh. Fungsi apa pun dapat digunakan sebagai fungsi kernel untuk pengklasifikasi knn berbobot yang nilainya menurun seiring bertambahnya jarak.
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="100">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">Mengapa studi kasusnya prediksi kelulusan?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  Karena untuk melakukan prediksi terhadap ketepatan kelulusan mahasiswa menggunakan algoritma Weighted K-Nearest Neighbor sebagai tolak ukur pengelola program studi untuk mendeteksi lebih dini mahasiswa yang memiliki potensi lulus tepat waktu dan tidak tepat waktu.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section><!-- End F.A.Q Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+          <h2>Contact</h2>
+          <p>Contact Us</p>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-4" data-aos="fade-right" data-aos-delay="100">
+            <div class="info">
+              <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Location:</h4>
+                <p>Kaligangsa Tegal</p>
+              </div>
+
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Email:</h4>
+                <p>amaliyahgian.12@gmail.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Call:</h4>
+                <p>+62895 36059 0709</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center"><button type="submit">Send Message</button></div>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-info">
+              <h3>Weighted KNN Prediction</h3>
+              <p class="pb-3"><em>Aplikasi ini dibuat untuk memenuhi syarat Tugas Akhir 2022</em></p>
+              <p>
+                Amaliyah Gian Fadilah <br>
+                Margadana, Tegal City<br><br>
+                <strong>Phone:</strong> +62895 36059 0709<br>
+                <strong>Email:</strong> info@weightedknn.com<br>
+              </p>
+              <div class="social-links mt-3">
+                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+          
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>2022</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        Designed by bootstrap||gians.id
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/php-email-form/validate.js') }}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{ url_for('static', filename='bootstrap/assets/js/main.js') }}"></script>
+
+
+</body>
+
+</html>

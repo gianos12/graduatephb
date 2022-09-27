@@ -1,0 +1,23 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-bell fa-fw"></i> Rekap data
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <p>Berikut Merupakan Hasil Rekap dari keseluruhan data</p>
+        <img src="{{url_for('static', filename ='img/hasil.png')}}" alt="">
+
+    </div>
+
+    <ul class="list-group">
+        <li class="list-group-item">Keterangan</li>
+
+        <li class="list-group-item list-group-item-danger">0 menunjukan Terlambat</li>
+        <li class="list-group-item list-group-item-info">1 menunjukan Tepat Waktu</li>
+        
+    </ul>
+    {% endblock %}
