@@ -39,11 +39,39 @@ class Kelulusan(db.Model):
     ips5= db.Column(db.Integer())
     ips6= db.Column(db.Integer())
     prediction = db.Column(db.String(100))
+    pass
+
+class multiPredict(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nama= db.Column(db.String(50))
+    umur = db.Column(db.Integer())
+    jenis_kelamin = db.Column(db.String(10))
+    status_sekolah = db.Column(db.String(10))
+    asal_sekolah = db.Column(db.String(10))
+    kegiatan_ukm = db.Column(db.String(10))
+    penghasilan_ortu= db.Column(db.String(10))
+    ips1= db.Column(db.Integer())
+    ips2= db.Column(db.Integer())
+    ips3= db.Column(db.Integer())
+    ips4= db.Column(db.Integer())
+    ips5= db.Column(db.Integer())
+    ips6= db.Column(db.Integer())
+    prediction = db.Column(db.String(100))
+    pass
 
 # app = Flask(__name__)
 class UserView(ModelView):
         can_create = False
         can_export = True
+
+
+class hasilpredik(ModelView):
+    can_create = False
+    can_export = True
+    def is_visible(self):
+        can_create = False
+        can_export = True
+
 class Rekap(BaseView):
     @expose('/')
     def index(self):
@@ -63,6 +91,11 @@ class Rekap(BaseView):
 
         # Rekap = submit()
         return self.render('admin/rekap.html')
+
+class Multi(BaseView):
+    @expose('/')
+    def index(self):
+        return self.render('admin/mahasiswa.html')
 
 #Logout
 class Logout(BaseView):
@@ -86,65 +119,59 @@ def mahasiswa():
 
 @app.route('/admin/upload_excel', methods=['POST'])
 def import_mhs():
+        id=0
+        db.session.query(multiPredict).delete()
         df = pd.read_excel(request.files.get('file'))
         row = pd.DataFrame(df)
-        count_row = df.shape[0]     
+        count_row = df.shape[0]
 
         # print(count_row)
         # print(row.iloc[0])
 
         for x in range(0, count_row):
             col = row.iloc[x]
-            con = mysql.connect()
-            cursor = con.cursor()
+            # con = mysql.connect()
+            # cursor = con.cursor()
 
         # jenis kelamin
-            if col[4] == "laki-laki":
+            if col[3] == "laki-laki":
+                col3 = "0"
+            else:
+                col3 = "1"
+
+        # status sekolah
+            if col[4] == "negeri":
                 col4 = "0"
             else:
                 col4 = "1"
 
-        # domisili
-            if col[5] == "pemalang":
-                col5 = "3"
-            elif col[5] == "brebes":
-                col5 ="2"
-            elif  col[5] == "tegal":
-                col5 = "1"
+        # asal sekolah
+            if col[5] == "sma":
+                col5 = "0"
             else:
-                col5 = "-999"
+                col5 = "1"
 
-        # status sekolah
-            if col[6] == "negeri":
+        # kegiatan organisasi
+            if col[6] == "tidak":
                 col6 = "0"
             else:
                 col6 = "1"
 
-        # asal sekolah
-            if col[7] == "sma":
-                col7 = "0"
-            else:
-                col7 = "1"
-
-        # kegiatan organisasi
-            if col[8] == "tidak":
-                col8 = "0"
-            else:
-                col8 = "1"
-
         # penghasilan ortu
-            if col[9] == "tinggi":
-                col9 = "2"
-            elif col[9] == "sedang":
-                col9 = "1"
+            if col[7] == "tinggi":
+                col7 = "2"
+            elif col[7] == "sedang":
+                col7 = "1"
             else:
-                col9 = "0"
+                col7 = "0"
 
-            query = "INSERT INTO `mahasiswa` (`id`, `nim`, `nama_lengkap`, `umur`, `jenis_kelamin`, `domisili`, `status_sekolah`, `asal_sekolah`, `kegiatan_organisasi`, `penghasilan_ortu`, `ips1`, `ips2`, `ips3`, `ips4`, `ips5`, `ips6`, `status_kelulusan`) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NULL);"
-            cursor.execute(query, (col[1], col[2], col[3], col4, col5, col6, col7, col8, col9, col[10], col[11], col[12], col[13], col[14], col[15]))
-            con.commit()
-
-        return redirect('/admin/data_mahasiswa')
+            prediction = preprocessDataAndPredict(col[2], col3, col4, col5, col6, col7, col[8], col[9], col[10], col[11], col[12], col[13])
+            addData=multiPredict(nama=col[1], umur=int(col[2]), jenis_kelamin=col3, status_sekolah=col4, asal_sekolah=col5, kegiatan_ukm=col6, penghasilan_ortu=col7, ips1=col[8], ips2=col[9], ips3=col[10], ips4=col[11], ips5=col[12], ips6=col[13], prediction=int(prediction))
+            addDataReal=Kelulusan(nama=col[1], umur=int(col[2]), jenis_kelamin=col3, status_sekolah=col4, asal_sekolah=col5, kegiatan_ukm=col6, penghasilan_ortu=col7, ips1=col[8], ips2=col[9], ips3=col[10], ips4=col[11], ips5=col[12], ips6=col[13], prediction=int(prediction))
+            db.session.add(addData)
+            db.session.add(addDataReal)
+            db.session.commit()
+        return redirect('/admin/multipredict/')
 
     
 @app.route('/predict/', methods=['GET', 'POST'])
@@ -173,7 +200,7 @@ def predict():
             predictiondb = Kelulusan(nama=nama, umur=umur, jenis_kelamin=jenis_kelamin,status_sekolah=status_sekolah,asal_sekolah=asal_sekolah, kegiatan_ukm=kegiatan_ukm,penghasilan_ortu=penghasilan_ortu,ips1=ips1, ips2=ips2, ips3=ips3, ips4=ips4, ips5=ips5, ips6=ips6, prediction=int(prediction))
             db.session.add(predictiondb)
             db.session.commit()
-            
+            print(nama)
             return render_template('predict.html',nama=nama, umur=umur, jenis_kelamin=jenis_kelamin,status_sekolah=status_sekolah,asal_sekolah=asal_sekolah, kegiatan_ukm=kegiatan_ukm,
             penghasilan_ortu=penghasilan_ortu,ips1=ips1, ips2=ips2, ips3=ips3, ips4=ips4, ips5=ips5, ips6=ips6, prediction=prediction)
 
@@ -210,6 +237,7 @@ def preprocessDataAndPredict(umur, jenis_kelamin,status_sekolah ,asal_sekolah, k
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    db.create_all()
     if request.method == 'POST':
         username = request.form.get('username') 
         password = request.form.get('password')
@@ -227,6 +255,8 @@ def login():
 
 #menu admin
 admin.add_view(UserView(Kelulusan, db.session))
+admin.add_view(hasilpredik(multiPredict, db.session))
+admin.add_view(Multi(name='Multi Predict', endpoint='Multi'))
 admin.add_view(Rekap(name='Rekap', endpoint='Rekap'))
 admin.add_view(Logout(name='Logout', endpoint='Logout'))
 

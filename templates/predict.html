@@ -76,7 +76,11 @@
                     <div class="card">
                       <div class="card-body">
                           <div class="card-title"><strong>Nama</strong></div>
-                             {% if prediction[0] %}
+                             {% if prediction[0] == 0 %}
+                          <a>
+                              {{nama}}
+                          </a>
+                          {% elif prediction[0] == 1 %}
                           <a>
                               {{nama}}
                           </a>
@@ -87,7 +91,11 @@
                     <div class="card">
                       <div class="card-body">
                         <div class="card-title"><strong>Umur</strong></div>
-                             {% if prediction[0] %}
+                             {% if prediction[0] == 0%}
+                          <a>
+                              {{umur}}
+                          </a>
+                          {% elif prediction[0] == 1%}
                           <a>
                               {{umur}}
                           </a>
@@ -97,7 +105,11 @@
                     <div class="card">
                       <div class="card-body">
                         <div class="card-title"><strong>Jenis Kelamin</strong></div>
-                             {% if prediction[0] %}
+                             {% if prediction[0] == 0 %}
+                          <a>
+                              {{jenis_kelamin}}
+                          </a>
+                          {% elif prediction[0] == 1 %}
                           <a>
                               {{jenis_kelamin}}
                           </a>
@@ -107,7 +119,11 @@
                     <div class="card">
                       <div class="card-body">
                         <div class="card-title"><strong>Status Sekolah</strong></div>
-                             {% if prediction[0] %}
+                             {% if prediction[0] == 0%}
+                          <a>
+                              {{status_sekolah}}
+                          </a>
+                          {% elif prediction[0] == 1%}
                           <a>
                               {{status_sekolah}}
                           </a>
@@ -117,7 +133,11 @@
                     <div class="card">
                       <div class="card-body">
                         <div class="card-title"><strong>Asal Sekolah</strong></div>
-                             {% if prediction[0] %}
+                             {% if prediction[0] == 0%}
+                          <a>
+                              {{asal_sekolah}}
+                          </a>
+                          {% elif prediction[0] == 1%}
                           <a>
                               {{asal_sekolah}}
                           </a>
@@ -127,7 +147,11 @@
                     <div class="card">
                       <div class="card-body">
                         <div class="card-title"><strong>Kegiatan UKM</strong></div>
-                             {% if prediction[0] %}
+                             {% if prediction[0] ==0 %}
+                          <a>
+                              {{kegiatan_ukm}}
+                          </a>
+                          {% elif prediction[0] ==1 %}
                           <a>
                               {{kegiatan_ukm}}
                           </a>
@@ -137,7 +161,11 @@
                     <div class="card">
                       <div class="card-body">
                         <div class="card-title"><strong>Penghasilan Orang Tua</strong></div>
-                             {% if prediction[0] %}
+                             {% if prediction[0] ==0%}
+                          <a>
+                              {{penghasilan_ortu}}
+                          </a>
+                          {% elif prediction[0] ==1%}
                           <a>
                               {{penghasilan_ortu}}
                           </a>
@@ -145,12 +173,18 @@
                       </div>
                     </div>
               </div>
+            </div>
+          </div>
               <div class="card-body">
                 <div class="card-group">
                       <div class="card">
                       <div class="card-body">
                           <div class="card-title"><strong>IPS 1</strong></div>
-                             {% if prediction[0] %}
+                             {% if prediction[0] == 0%}
+                          <a>
+                              {{ips1}}
+                          </a>
+                          {% elif prediction[0] == 1%}
                           <a>
                               {{ips1}}
                           </a>
@@ -160,7 +194,11 @@
                     <div class="card">
                       <div class="card-body">
                           <div class="card-title"><strong>IPS 2</strong></div>
-                              {% if prediction[0] %}
+                              {% if prediction[0] == 0%}
+                          <a>
+                              {{ips2}}
+                          </a>
+                          {% elif prediction[0] == 1%}
                           <a>
                               {{ips2}}
                           </a>
@@ -170,7 +208,11 @@
                     <div class="card">
                       <div class="card-body">
                           <div class="card-title"><strong>IPS 3</strong></div>
-                              {% if prediction[0] %}
+                              {% if prediction[0] == 0%}
+                          <a>
+                              {{ips3}}
+                          </a>
+                          {% elif prediction[0] == 1%}
                           <a>
                               {{ips3}}
                           </a>
@@ -180,7 +222,11 @@
                     <div class="card">
                       <div class="card-body">
                           <div class="card-title"><strong>IPS 4</strong></div>
-                              {% if prediction[0] %}
+                              {% if prediction[0] == 0%}
+                          <a>
+                              {{ips4}}
+                          </a>
+                          {% elif prediction[0] == 1%}
                           <a>
                               {{ips4}}
                           </a>
@@ -190,7 +236,11 @@
                     <div class="card">
                       <div class="card-body">
                           <div class="card-title"><strong>IPS 5</strong></div>
-                              {% if prediction[0] %}
+                              {% if prediction[0] == 0%}
+                          <a>
+                              {{ips5}}
+                          </a>
+                          {% elif prediction[0] == 1%}
                           <a>
                               {{ips5}}
                           </a>
@@ -200,7 +250,11 @@
                      <div class="card">
                       <div class="card-body">
                           <div class="card-title"><strong>IPS 6</strong></div>
-                              {% if prediction[0] %}
+                              {% if prediction[0] == 0%}
+                          <a>
+                              {{ips6}}
+                          </a>
+                          {% elif prediction[0] == 1%}
                           <a>
                               {{ips6}}
                           </a>
@@ -221,20 +275,18 @@
                                   <div class="alert alert-success" role="alert">
                                       <h1>TEPAT WAKTU</h1>
                                   </div>
-                                  {% endif %}
                               </div>
                           </div>
-  
+                                 {% elif prediction[0] == 0 %}
                           <div class="row justify-content-md-center">
                               <div class="thumbnail">
-                                  {% if prediction[0] == 0 %}
                                       <div class="alert alert-danger" role="alert">
                                         <h1>TERLAMBAT</h1>
                                       </div>
                                   {% endif %}
                               </div>
                           </div>
-  
+
                       </div>
                     </div>
                 </div>

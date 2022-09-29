@@ -1,0 +1,257 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+<link href="{{ url_for('static', filename='bootstrap/assets/img/favicon.png') }}">
+
+    <link href="{{ url_for('static', filename='bootstrap/assets/img/apple-touch-icon.png') }}">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{{ url_for('static', filename='bootstrap/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{{ url_for('static', filename='bootstrap/assets/css/style.css') }}" rel="stylesheet">
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+         <div class="card">
+            <div class="card-header text-center">
+              Prediksi Kelulusan Mahasiswa PHB
+            </div>
+
+<div class="container">
+    {% block action %}
+<div class="col-12 col-md-auto ms-auto d-print-none">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#modal-import" class="btn btn-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-table-import" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <desc>Download more icon variants from https://tabler-icons.io/i/table-import</desc>
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path
+                        d="M4 13.5v-7.5a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-6m-8 -10h16m-10 -6v11.5m-8 3.5h7m-3 -3l3 3l-3 3">
+                    </path>
+                </svg>
+                Import Mahasiswa
+            </a>
+        </span>
+        <a href="#" class="btn btn-primary d-none d-sm-inline-block btn-icon" data-bs-toggle="modal" data-bs-target="#modal-import""
+            data-bs-target="#modal-report">
+            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </a>
+
+
+        <div class="modal modal-blur fade" id="modal-import" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Import Mahasiswa</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                     <form method="post" action="/admin/upload_excel" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <label class="form-label">Upload File</label>
+                            <input type="file" name="file">
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                                Batal
+                            </a>
+                            <button data-bs-dismiss="modal" type="submit" class="btn btn-primary ms-auto">
+                                Import
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+              load_data();
+              function load_data(query)
+              {
+               $.ajax({
+                url:"/ajaxlivesearch",
+                method:"POST",
+                data:{query:query},
+                success:function(data)
+                {
+                  $('#result').html(data);
+                  $("#result").append(data.htmlresponse);
+                }
+               });
+              }
+              $('#search_text').keyup(function(){
+                var search = $(this).val();
+                if(search != ''){
+                load_data(search);
+               }else{
+                load_data();
+               }
+              });
+            });
+            </script>
+
+{% endblock %}
+
+{% block content %}
+<div class="row row-cards">
+    <div class="col-12">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-vcenter table-bordered">
+                    <thead class="text-center">
+                        <tr>
+                            <th
+                            for x in range(6):
+                            rowspan="2">No</th>
+                            <th rowspan="2">Nama Lengkap</th>
+                            <th rowspan="2">Umur</th>
+                            <th rowspan="2">Jenis Kelamin</th>
+                            <th rowspan="2">Status Sekolah</th>
+                            <th rowspan="2">Asal Sekolah</th>
+                            <th rowspan="2">Kegiatan Organisasi</th>
+                            <th rowspan="2">P. Orang Tua</th>
+                            <th colspan="6">IPS</th>
+                            <th rowspan="2">Aksi</th>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dt in data %}
+                        <tr>
+                            <td class="text-center">{{loop.index}}</td>
+                            <td class="text-center">{{dt[1]}}</td>
+                            <td>{{dt[2]}}</td>
+                            <td>{{dt[3]}}</td>
+                            <td class="text-center">{{dt[4]}}</td>
+                            <td class="text-center">{{ 'Laki-laki' if dt[5]=='0' else 'Perempuan'}}</td>
+                            <td class="text-center">{{ 'Negeri' if dt[7]=='0' else 'Swasta'}}</td>
+                            <td class="text-center">{{ 'SMA' if dt[8]=='0' else 'SMK'}}</td>
+                            <td class="text-center">{{ 'Tidak' if dt[9]=='0' else 'Ya'}}</td>
+                            {% if dt[10]=='0' %}<td class="text-center">Rendah</td>{% endif %}
+                            {% if dt[10]=='1' %}<td class="text-center">Sedang</td>{% endif %}
+                            {% if dt[10]=='2' %}<td class="text-center">Tinggi</td>{% endif %}
+                            <td class="text-center">{{dt[11]}}</td>
+                            <td class="text-center">{{dt[12]}}</td>
+                            <td class="text-center">{{dt[13]}}</td>
+                            <td class="text-center">{{dt[14]}}</td>
+                            <td class="text-center">{{dt[15]}}</td>
+                            <td class="text-center">{{dt[16]}}</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <!-- <a href="/admin/edit_mhs/{{dt[1]}}" class="btn btn-warning btn-icon"> -->
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-edit" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <desc>Download more icon variants from https://tabler-icons.io/i/edit
+                                            </desc>
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1">
+                                            </path>
+                                            <path
+                                                d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z">
+                                            </path>
+                                            <path d="M16 5l3 3"></path>
+                                        </svg>
+                                    </a>
+                                    <!-- <a href="/admin/del_mhs/{{dt[1]}}" class="btn btn-danger btn-icon"> -->
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-trash" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <desc>Download more icon variants from https://tabler-icons.io/i/trash
+                                            </desc>
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <line x1="4" y1="7" x2="20" y2="7"></line>
+                                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-info">
+              <h3>Weighted KNN Prediction</h3>
+              <p class="pb-3"><em>Aplikasi ini dibuat untuk memenuhi syarat Tugas Akhir 2022</em></p>
+              <p>
+                Amaliyah Gian Fadilah <br>
+                Margadana, Tegal City<br><br>
+                <strong>Phone:</strong> +62895 36059 0709<br>
+                <strong>Email:</strong> info@weightedknn.com<br>
+              </p>
+              <div class="social-links mt-3">
+                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>2022</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        Designed by bootstrap||gians.id
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+
+<script src="{{ url_for('static', filename='bootstrap/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/assets/vendor/php-email-form/validate.js') }}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{ url_for('static', filename='bootstrap/assets/js/main.js') }}"></script>
+{% endblock %}
+{% endblock %}
